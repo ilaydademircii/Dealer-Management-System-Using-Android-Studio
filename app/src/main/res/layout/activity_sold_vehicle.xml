@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.vehicles.SoldVehicleActivity">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="353dp"
+                android:layout_height="30dp"
+                android:text="Araç Bilgileri"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/vehicle_type_spinner"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <Spinner
+                android:id="@+id/vehicle_model_spinner"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_type_spinner" />
+
+            <EditText
+                android:id="@+id/model"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Model"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vehicle_model_spinner" />
+
+            <EditText
+                android:id="@+id/year"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Yıl"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/model" />
+
+            <EditText
+                android:id="@+id/licensePlate"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Plaka"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/year" />
+
+            <EditText
+                android:id="@+id/chassisNo"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Şasi Numarası"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/licensePlate" />
+
+            <EditText
+                android:id="@+id/receivingPrice"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Alış Fiyatı"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chassisNo" />
+
+            <EditText
+                android:id="@+id/salePrice"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Satış Fiyatı"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receivingPrice" />
+
+            <EditText
+                android:id="@+id/receivedPayment"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Alınan Ödeme"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/salePrice" />
+
+            <EditText
+                android:id="@+id/explanation"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="Açıklama"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receivedPayment" />
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Müşteri Bilgileri"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/explanation" />
+
+            <EditText
+                android:id="@+id/customerName"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Ad"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            <EditText
+                android:id="@+id/customerSurname"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Soyad"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adEditText" />
+
+            <EditText
+                android:id="@+id/customerTcNo"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Tc Kimlik No"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customerSurname" />
+
+            <EditText
+                android:id="@+id/customerPhoneNumber"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Numara"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tcKimlikNoEditText" />
+
+            <EditText
+                android:id="@+id/customerAddress"
+                android:layout_width="353dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Adres"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customerPhoneNumber" />
+
+            <Button
+                android:id="@+id/receivingButton"
+                android:layout_width="353dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:onClick="onSaveButtonClicked"
+                android:text="Satışı Tamamla"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customerAddress" />
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

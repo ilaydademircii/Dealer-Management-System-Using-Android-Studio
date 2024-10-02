@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "911344098372",
+    "firebase_url": "https://dealersystem-33f7b-default-rtdb.firebaseio.com",
+    "project_id": "dealersystem-33f7b",
+    "storage_bucket": "dealersystem-33f7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911344098372:android:9d503fd4634527197a7011",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5gJZCOIKKB2srWeM_WdyXJRcmJVjID4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/levend__2_"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/levend__2_"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication"
+        tools:targetApi="31">
+        <activity
+            android:name=".controller.payments.ReceivingPaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.payments.AllRemainingPaymentsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.payments.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.vehicles.SoldVehicleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.vehicles.TradeInVehicleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.vehicles.NewVehicleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.vehicles.SecondHandVehicleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.PaymentsMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.VehiclesMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.HomePageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".controller.LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".controller.MainActivity" />
+        <activity android:name=".controller.MainMenuActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/baseline_home"
+            android:title="Ana Sayfa" />
+        <item
+            android:id="@+id/contact"
+            android:icon="@drawable/baseline_phone"
+            android:title="İletişim" />
+
+
+    </group>
+
+
+    <item android:title="Profil">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/account"
+                    android:icon="@drawable/ic_action_user"
+                    android:title="Hesap" />
+                <item
+                    android:id="@+id/login"
+                    android:icon="@drawable/baseline_login"
+                    android:title="Giriş Yap" />
+
+                <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/baseline_exit_to_app"
+                    android:title="Çıkış Yap" />
+
+            </group>
+        </menu>
+
+    </item>
+
+
+</menu>

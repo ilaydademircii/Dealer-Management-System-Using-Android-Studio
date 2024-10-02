@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.payments.ReceivingPaymentActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <!-- Tc Kimlik No -->
+            <TextView
+                android:id="@+id/labelTcNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tc Kimlik No"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/customerTcNo"
+                android:layout_width="380dp"
+                android:layout_height="69dp"
+                android:hint="Tc Kimlik No"
+                android:inputType="number" />
+
+            <!-- Search Button -->
+            <Button
+                android:id="@+id/searchButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="onSearchButtonClicked"
+                android:text="Arama" />
+
+            <!-- Kalan Ödeme -->
+            <TextView
+                android:id="@+id/labelRemainingPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Kalan Ödeme"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/remainingPayment"
+                android:layout_width="381dp"
+                android:layout_height="65dp"
+                android:enabled="false"
+                android:hint="Kalan Ödeme" />
+
+            <!-- Ödeme Alış Başlığı -->
+            <TextView
+                android:id="@+id/paymentSectionHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Ödeme Alış"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Alınan Ödeme Miktarı Label -->
+            <TextView
+                android:id="@+id/labelReceivedPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Alınan Ödeme Miktarı:"
+                android:textSize="16sp"
+                android:labelFor="@id/receivedPayment" />
+
+            <!-- Alınan Ödeme Miktarı Input -->
+            <EditText
+                android:id="@+id/receivedPayment"
+                android:layout_width="377dp"
+                android:layout_height="58dp"
+                android:hint="Ödeme Miktarı"
+                android:inputType="numberDecimal" />
+
+            <!-- Ödeme Al Butonu -->
+            <Button
+                android:id="@+id/getPaymentButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="onPaymentButtonClicked"
+                android:text="Ödeme Al" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
