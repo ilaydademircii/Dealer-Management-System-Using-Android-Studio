@@ -37,9 +37,9 @@ public class FirebaseConnection {
     public static void initFirebase(Context context) {
         try {
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setApiKey("AIzaSyD5gJZCOIKKB2srWeM_WdyXJRcmJVjID4Q")
-                    .setApplicationId("1:911344098372:android:9d503fd4634527197a7011")
-                    .setDatabaseUrl("https://dealersystem-33f7b-default-rtdb.firebaseio.com/")
+                    .setApiKey("********")
+                    .setApplicationId("********")
+                    .setDatabaseUrl("**********")
                     .build();
 
             FirebaseApp.initializeApp(context, options);
