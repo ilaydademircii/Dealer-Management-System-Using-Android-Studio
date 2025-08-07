@@ -10,7 +10,7 @@ Thanks to Firebase Realtime Database, data is synchronized and managed in real-t
 
 * **Add Vehicles:**
 
-  * Used vehicles
+  * Second-hand vehicles
   * New vehicles
   * Trade-in vehicles
 * **Vehicle Sales:** Record sales transactions
