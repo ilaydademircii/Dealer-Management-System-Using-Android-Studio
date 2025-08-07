@@ -3,8 +3,10 @@
 ## About the Project
 
 This project is a dealer management system developed using Android Studio and **Firebase Realtime Database**.
-It allows adding used, new, and trade-in vehicles, recording sales, receiving payments, viewing remaining balances, and tracking customer payment histories.
+It allows adding second-hand, new, and trade-in vehicles, recording sales, receiving payments, viewing remaining balances, and tracking customer payment histories.
 Thanks to Firebase Realtime Database, data is synchronized and managed in real-time.
+
+Additionally, the project is designed using the **Model-View-Controller (MVC)** architecture and implements the **Command Design Pattern** to separate concerns, ensure clean code structure, and make operations like saving and deleting modular and reusable.
 
 ## Features
 
@@ -24,6 +26,8 @@ Thanks to Firebase Realtime Database, data is synchronized and managed in real-t
 * Java
 * **Firebase Realtime Database**
 * XML (User Interface Design)
+* **MVC Architecture**
+* **Command Design Pattern**
 
 ## Installation
 
@@ -40,12 +44,20 @@ Thanks to Firebase Realtime Database, data is synchronized and managed in real-t
 ## Usage
 
 * Upon launching the app, you can access modules for adding vehicles, sales, and receiving payments.
-* Add new vehicles categorized as used, new, or trade-in.
+* Add new vehicles categorized as second-hand, new, or trade-in.
 * Record sales transactions and receive customer payments.
 * Track remaining balances and view detailed customer payment histories.
+
+## Architecture
+
+This application follows the **Model-View-Controller (MVC)** design pattern:
+
+* **Model:** Manages data and business logic
+* **View:** Handles user interface and display
+* **Controller:** Processes input and coordinates between Model and View
+
+It also uses the **Command Design Pattern** to encapsulate operations like saving, updating, and deleting into separate command classes. This makes the codebase more modular, reusable, and easier to maintain.
 
 ## Contributing
 
 If you'd like to contribute, please fork the repository, make your changes, and submit a pull request.
-
- sections like screenshots, contact info, or anything else!
