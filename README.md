@@ -1,7 +1,3 @@
-Sure! Here’s the README file translated into English, tailored for your Firebase Realtime Database based Android Studio project:
-
----
-
 # Dealer Management System Using Android Studio
 
 ## About the Project
@@ -52,10 +48,4 @@ Thanks to Firebase Realtime Database, data is synchronized and managed in real-t
 
 If you'd like to contribute, please fork the repository, make your changes, and submit a pull request.
 
-## License
-
-This project is licensed under the MIT License.
-
----
-
-If you want, I can help you add sections like screenshots, contact info, or anything else!
+ sections like screenshots, contact info, or anything else!
