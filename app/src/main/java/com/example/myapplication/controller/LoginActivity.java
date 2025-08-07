@@ -23,7 +23,6 @@ public class LoginActivity extends AppCompatActivity {
     final String password = "";
     EditText viewUsername, viewPassword;
 
-    //  private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -12,14 +12,8 @@ import model.DatabaseConnection;
 public class NewVehicle {
 
 
-
-    DatabaseConnection db;
-    private PreparedStatement pstat = null;
-    private Connection conn = null;
-    private Statement stat = null;
-
     private static NewVehicle instance;
-
+    DatabaseConnection db;
     String model;
     String year;
     String price;
@@ -27,6 +21,9 @@ public class NewVehicle {
     double kdvRate;
     String explanation;
     String date;
+    private PreparedStatement pstat = null;
+    private Connection conn = null;
+    private Statement stat = null;
 
     public NewVehicle() {
         super();
@@ -99,19 +96,19 @@ public class NewVehicle {
                     String query = "insert into newvehicles(Model,Year,Price,ChassisNo,KdvRate,Explanation)values(?,?,?,?,?,?)";
                     setVehicleWithPrepaeredStatement(query);
 
-           //         JOptionPane.showMessageDialog(null, "Yeni araç başarıyla eklendi.", "  ",
-             //               JOptionPane.INFORMATION_MESSAGE);
+                    //         JOptionPane.showMessageDialog(null, "Yeni araç başarıyla eklendi.", "  ",
+                    //               JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     String query = "UPDATE newvehicles SET  Model=?,Year=?,Price=?,ChassisNo=?,KdvRate=?,Explanation=? WHERE ChassisNo=?";
                     setVehicleWithPrepaeredStatement(query);
 
-         //           JOptionPane.showMessageDialog(null, "Yeni araç başarıyla güncellendi.", "  ",
-           //                 JOptionPane.INFORMATION_MESSAGE);
+                    //           JOptionPane.showMessageDialog(null, "Yeni araç başarıyla güncellendi.", "  ",
+                    //                 JOptionPane.INFORMATION_MESSAGE);
 
                 }
             } else {
-        //        JOptionPane.showMessageDialog(null, "Şasi numarası boş bırakılamaz.", " Hata ",
-          //              JOptionPane.ERROR_MESSAGE);
+                //        JOptionPane.showMessageDialog(null, "Şasi numarası boş bırakılamaz.", " Hata ",
+                //              JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception e) {
@@ -158,7 +155,6 @@ public class NewVehicle {
 
         }
     }
-
 
 
     public void setVehicleWithPrepaeredStatement(String query) {

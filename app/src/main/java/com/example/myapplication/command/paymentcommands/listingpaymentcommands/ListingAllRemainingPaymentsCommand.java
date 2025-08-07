@@ -1,22 +1,21 @@
 package com.example.myapplication.command.paymentcommands.listingpaymentcommands;
 
 import android.app.Activity;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.example.myapplication.model.Customer;
 import com.example.myapplication.model.payments.AllRemainingPayments;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListingAllRemainingPaymentsCommand {
 
-    ArrayList<String> paymentList;
+    List<String> paymentList;
 
     Activity activity;
-    public ListingAllRemainingPaymentsCommand(Activity activity ) {
+
+    public ListingAllRemainingPaymentsCommand(Activity activity) {
         super();
-        this.activity=activity;
+        this.activity = activity;
         //nesneden paymentList <String> alındı
 
     }
@@ -24,7 +23,17 @@ public class ListingAllRemainingPaymentsCommand {
     //Amaç nesneden kullanılacak(activityde) paymentList <String> i düzenleme
 
     public List<String> execute() {
-        return AllRemainingPayments.getInstance().getAllRemainingPayments(activity);
+        Log.e("FirebaseDebug command", "command calisiyor: ");
+        paymentList = AllRemainingPayments.getInstance().getAllRemainingPayments(activity);
+        for (String p : paymentList) {
+            Log.e("FirebaseDebug command", "payment degeri: " + p);
+
+
+        }
+        Log.e("FirebaseDebug command", "liste bos ");
+        return paymentList;
     }
+
+
 }
 

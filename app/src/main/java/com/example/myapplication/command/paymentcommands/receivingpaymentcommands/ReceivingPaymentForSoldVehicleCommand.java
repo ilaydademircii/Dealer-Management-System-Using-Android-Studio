@@ -18,12 +18,13 @@ public class ReceivingPaymentForSoldVehicleCommand {
     EditText editTextReceivedPayment;
 
     Activity activity;
+
     public ReceivingPaymentForSoldVehicleCommand(Activity activity) {
         super();
         this.payment = ReceivingPayment.getInstance();
         this.customer = Customer.getInstance();
         editTextReceivedPayment = activity.findViewById(R.id.receivedPayment);
-        this.activity=activity;
+        this.activity = activity;
     }
 
     public void execute() {
@@ -33,8 +34,8 @@ public class ReceivingPaymentForSoldVehicleCommand {
             payment.setReceivedPayment(priceWithoutDot);
             payment.setCustomerIdNo(customer.getIdNumber());
             Toast.makeText(activity, "command başarılı", Toast.LENGTH_LONG).show();
-        }catch (Exception e){
-            Toast.makeText(activity, "command hata: "+ e.getMessage(), Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(activity, "command hata: " + e.getMessage(), Toast.LENGTH_LONG).show();
 
         }
     }

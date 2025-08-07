@@ -2,152 +2,31 @@ package com.example.myapplication.model.payments;
 
 
 import android.app.Activity;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.example.myapplication.model.DatabaseConnection;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-
-
-//public class AllRemainingPayments {
-//    private static AllRemainingPayments instance;
-//    DatabaseConnection db;
-//    List<AllRemainingPayments> list;
-//    String customerIdNo;
-//    String customerName;
-//    String customerSurname;
-//    String remainingPayments;
-//    List<String> allRemainingPaymentsList;
-//    //	private PreparedStatement pstat = null;
-//    private Connection conn = null;
-//    private Statement stat = null;
-//
-//    public AllRemainingPayments() {
-//        super();
-//        this.db = DatabaseConnection.getInstance();
-//        this.conn = db.getConnection();
-//        this.allRemainingPaymentsList=new ArrayList<>();
-//    }
-//
-//
-//    public static AllRemainingPayments getInstance() {
-//        if (instance == null) {
-//            instance = new AllRemainingPayments();
-//        }
-//        return instance;
-//    }
-//
-//
-//    public List<AllRemainingPayments> getAllRemainingPayments() {
-//        list = new ArrayList<>();
-//
-//        try {
-//            String query = "SELECT customers.IdNo, customers.Name, customers.Surname, vehiclessold.RemainingPaymentAmount\r\n"
-//                    + "FROM vehiclessold\r\n"
-//                    + "INNER JOIN customers ON vehiclessold.CustomerId = customers.Id\r\n"
-//                    + "WHERE vehiclessold.RemainingPaymentAmount REGEXP '^[0-9]+$' \r\n"
-//                    + "AND CAST(vehiclessold.RemainingPaymentAmount AS DECIMAL) > 0; ";
-//
-//            stat = conn.createStatement();
-//            ResultSet rs = stat.executeQuery(query);
-//
-//            while (rs.next()) {
-//                AllRemainingPayments payments = new AllRemainingPayments();
-//                payments.setCustomerIdNo(rs.getString("IdNo"));
-//                payments.setCustomerName(rs.getString("Name"));
-//                payments.setCustomerSurname(rs.getString("Surname"));
-//                payments.setRemainingPayments(rs.getString("RemainingPaymentAmount"));
-//
-//                list.add(payments);
-//            }
-//
-//            stat.close();
-//            rs.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//
-//        }
-//        return list;
-//    }
-//
-//
-//    public String getCustomerIdNo() {
-//        return customerIdNo;
-//    }
-//
-//
-//    public void setCustomerIdNo(String customerIdNo) {
-//        this.customerIdNo = customerIdNo;
-//    }
-//
-//
-//    public String getRemainingPayments() {
-//        return remainingPayments;
-//    }
-//
-//
-//    public void setRemainingPayments(String remainingPayments) {
-//        this.remainingPayments = remainingPayments;
-//    }
-//
-//
-//    public String getCustomerName() {
-//        return customerName;
-//    }
-//
-//
-//    public void setCustomerName(String customerName) {
-//        this.customerName = customerName;
-//    }
-//
-//
-//    public String getCustomerSurname() {
-//        return customerSurname;
-//    }
-//
-//
-//    public void setCustomerSurname(String customerSurname) {
-//        this.customerSurname = customerSurname;
-//    }
-//
-//    public List<String> getAllRemainingPaymentsList() {
-//        return allRemainingPaymentsList;
-//    }
-//
-//    public void setAllRemainingPaymentsList(List<String> allRemainingPaymentsList) {
-//        this.allRemainingPaymentsList = allRemainingPaymentsList;
-//    }
-//}
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AllRemainingPayments {
     private static AllRemainingPayments instance;
-    private FirebaseDatabase db;
-    private DatabaseReference ref;
     List<AllRemainingPayments> list;
     String customerIdNo;
     String customerName;
     String customerSurname;
     String customerPhoneNumber;
     String remainingPayments;
-    ArrayList<String> allRemainingPaymentsList;
+    List<String> remainingPaymentsList;
+    private FirebaseDatabase db;
+    private DatabaseReference ref;
 
     public AllRemainingPayments() {
         this.db = FirebaseDatabase.getInstance();
-        this.ref = db.getReference("allremainingpayments");
-        this.allRemainingPaymentsList = new ArrayList<>();
+        this.ref = db.getReference("vehiclessold");
+        this.remainingPaymentsList = new ArrayList<>();
     }
 
     public static AllRemainingPayments getInstance() {
@@ -264,7 +143,7 @@ public class AllRemainingPayments {
 //        }
 //        return list;
 //    }
-
+/*
     public ArrayList<String> getAllRemainingPayments(Activity activity) {
         ArrayList<String> list = new ArrayList<>();
         Toast.makeText(activity, "model başladı ", Toast.LENGTH_LONG).show();
@@ -339,6 +218,126 @@ public class AllRemainingPayments {
         }
         return list;
     }
+
+ */
+
+    /////ÇALIŞIRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+    public List<String> getAllRemainingPayments(Activity activity) {
+        try {
+            // `vehiclessold` koleksiyonundaki veriyi alıyoruz
+            ref.get().addOnSuccessListener(dataSnapshot -> {
+                remainingPaymentsList.clear(); // Listeyi temizliyoruz
+                if (dataSnapshot.exists()) {
+                    Log.d("FirebaseDebug", "Veri başarıyla alındı: " + dataSnapshot.getChildrenCount() + " araç bulundu.");
+                    // `vehiclessold` içindeki her bir aracı kontrol ediyoruz
+                    for (DataSnapshot vehicleSnapshot : dataSnapshot.getChildren()) {
+                        String customerId = vehicleSnapshot.child("customerIdNo").getValue(String.class);
+                        String remainingPaymentAmountStr = vehicleSnapshot.child("remainingPaymentAmount").getValue(String.class);
+
+                        Log.d("FirebaseDebug", "Araç verisi: customerId = " + customerId + ", remainingPaymentAmount = " + remainingPaymentAmountStr);
+
+                        // `customerId` ve `remainingPaymentAmount` null değilse işlemi başlatıyoruz
+                        if (customerId != null && remainingPaymentAmountStr != null && !remainingPaymentAmountStr.isEmpty()) {
+                            try {
+                                double remainingPaymentAmount = Double.parseDouble(remainingPaymentAmountStr);
+
+                                Log.d("FirebaseDebug", "Kalan ödeme miktarı: " + remainingPaymentAmount);
+
+                                // Kalan ödeme miktarı sıfırdan büyükse işlemi yapıyoruz
+                                if (remainingPaymentAmount > 0) {
+                                    // `customerId` ile `customers` koleksiyonundan müşteri bilgilerini alıyoruz
+                                    ref.getDatabase().getReference("customers").child(customerId).get()
+                                            .addOnSuccessListener(customerSnapshot -> {
+                                                if (customerSnapshot.exists()) {
+                                                    Log.d("FirebaseDebug", "Müşteri verisi bulundu: " + customerSnapshot.getKey());
+
+                                                    // Müşteri bilgilerini alıyoruz
+                                                    String customerIdNo = customerSnapshot.child("idNumber").getValue(String.class);
+                                                    String customerName = customerSnapshot.child("name").getValue(String.class);
+                                                    String customerSurname = customerSnapshot.child("surname").getValue(String.class);
+                                                    String customerPhoneNumber = customerSnapshot.child("phoneNumber").getValue(String.class);
+
+                                                    // Müşteri bilgilerini birleştiriyoruz
+                                                    String rowData = customerIdNo + " - " +
+                                                            customerName + " - " +
+                                                            customerSurname + " - " +
+                                                            customerPhoneNumber + " - " +
+                                                            remainingPaymentAmountStr;
+                                                    this.remainingPaymentsList.add(rowData);
+
+                                                    Log.d("FirebaseDebug", "Listeye eklenen veri: " + rowData);
+
+                                                    // Listeye ekliyoruz
+
+                                                    // Başarıyla ekleme yaptıktan sonra kullanıcıya bilgi veriyoruz
+                                                } else {
+                                                    Log.d("FirebaseDebug", "Müşteri verisi bulunamadı: " + customerId);
+                                                }
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                Log.e("FirebaseDebug", "Müşteri verisi alınamadı: " + e.getMessage());
+                                            });
+                                }
+                            } catch (NumberFormatException e) {
+                                Log.e("FirebaseDebug", "Geçersiz ödeme değeri: " + remainingPaymentAmountStr);
+                            }
+                        } else {
+                            Log.d("FirebaseDebug", "customerId veya remainingPaymentAmount geçersiz: customerId = " + customerId + ", remainingPaymentAmount = " + remainingPaymentAmountStr);
+                        }
+                    }
+
+
+                    // Firebase işlemleri bittiğinde gecikme ekleniyor
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Veri çekme işlemi
+                            try {
+                                // Burada veriyi çekmek için sleep ekleyebilirsiniz
+                                Thread.sleep(2000); // 2 saniye bekletme
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            // UI güncellemesi yapmak için
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // UI'deki işlemler
+                                }
+                            });
+                        }
+                    }).start();
+                } else {
+                    Log.d("FirebaseDebug", "Veri bulunamadı: vehiclessold koleksiyonu boş.");
+                }
+            }).addOnFailureListener(e -> {
+                Log.e("FirebaseDebug", "Veri yüklenemedi: " + e.getMessage());
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("FirebaseDebug", "Bir hata oluştu: " + e.getMessage());
+        }
+
+        for (String p : remainingPaymentsList) {
+            Log.e("FirebaseDebug model", "payment degeri: " + p);
+
+
+        }
+        return this.remainingPaymentsList;
+    }
+
+
+/*
+
+ public List<String> getAllRemainingPayments(Activity activity) {
+     List<String> list=new ArrayList<>();
+     try {
+        ref.get().add
+     }catch (Exception e){
+     }
+ }
+*/
 //    public interface OnDataReadyCallback {
 //        void onDataReady(ArrayList<String> remainingPayments);
 //    }//
@@ -427,12 +426,12 @@ public class AllRemainingPayments {
         this.customerSurname = customerSurname;
     }
 
-    public ArrayList<String> getAllRemainingPaymentsList() {
-        return allRemainingPaymentsList;
+    public List<String> getAllRemainingPaymentsList() {
+        return remainingPaymentsList;
     }
 
-    public void setAllRemainingPaymentsList(ArrayList<String> allRemainingPaymentsList) {
-        this.allRemainingPaymentsList = allRemainingPaymentsList;
+    public void setAllRemainingPaymentsList(List<String> allRemainingPaymentsList) {
+        this.remainingPaymentsList = allRemainingPaymentsList;
     }
 
     public String getCustomerPhoneNumber() {
@@ -442,4 +441,6 @@ public class AllRemainingPayments {
     public void setCustomerPhoneNumber(String customerPhoneNumber) {
         this.customerPhoneNumber = customerPhoneNumber;
     }
+
+
 }

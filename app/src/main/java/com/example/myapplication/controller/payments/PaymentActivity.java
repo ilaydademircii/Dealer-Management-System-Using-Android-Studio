@@ -65,33 +65,15 @@ public class PaymentActivity extends AppCompatActivity {
 
             customer.setIdNumber(tcNo.getText().toString());
             payment.setCustomerIdNo(tcNo.getText().toString());
-            Toast.makeText(this, "1 listelendi...", Toast.LENGTH_LONG).show();
-            paymentList.clear();
-            paymentList=listingPaymentsCommand.execute();
-            Toast.makeText(this, "2 listelendi...", Toast.LENGTH_LONG).show();
-            if(paymentList.isEmpty()){
-                Toast.makeText(this, "Boş...", Toast.LENGTH_LONG).show();
-                paymentList.add("aa");
-            }
-//            // Notify adapter
-//            listingPaymentsCommand.execute();
-//
-//            // Güncellenen verileri alıyoruz
-//            paymentList.clear();  // Eski verileri temizliyoruz
-//            paymentList.addAll(payment.getPaymentsList());  // Yeni verileri ekliyoruz
-//            paymentList=payment.getPaymentsList();
-//            paymentList.add("aaaa");
-//            // Adapter'e yeni verileri gösterdiğini söylüyoruz
-//            adapter.notifyDataSetChanged();
-//            listViewPayments.setAdapter(adapter);
+            // paymentList.clear();
+            paymentList = listingPaymentsCommand.execute(this);
+
+
             ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_item, paymentList);
             listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             listViewPayments.setAdapter(listAdapter);
             listAdapter.notifyDataSetChanged();
-            Toast.makeText(this, "3 listelendi...", Toast.LENGTH_LONG).show();
-
-
             Toast.makeText(this, "Başarıyla listelendi...", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();

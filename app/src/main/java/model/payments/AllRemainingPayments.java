@@ -9,21 +9,16 @@ import java.util.List;
 import model.DatabaseConnection;
 
 public class AllRemainingPayments {
-    DatabaseConnection db;
-    //	private PreparedStatement pstat = null;
-    private Connection conn = null;
-    private Statement stat = null;
-
-
     private static AllRemainingPayments instance;
+    DatabaseConnection db;
     List<AllRemainingPayments> list;
-
     String customerIdNo;
     String customerName;
     String customerSurname;
-
     String remainingPayments;
-
+    //	private PreparedStatement pstat = null;
+    private Connection conn = null;
+    private Statement stat = null;
 
 
     public AllRemainingPayments() {
@@ -113,14 +108,6 @@ public class AllRemainingPayments {
     public void setCustomerSurname(String customerSurname) {
         this.customerSurname = customerSurname;
     }
-
-
-
-
-
-
-
-
 
 
 }

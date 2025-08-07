@@ -1,120 +1,8 @@
 package com.example.myapplication.model.payments;
 
-import com.example.myapplication.model.DatabaseConnection;
+import android.app.Activity;
+import android.util.Log;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-
-
-//public class Payment {
-//
-//    private static Payment instance;
-//
-//    DatabaseConnection db;
-//    private PreparedStatement pstat = null;
-//    private Connection conn = null;
-////	private Statement stat = null;
-//
-//
-//    List<Payment> list;
-//    String customerIdNo;
-//    String receivedPayments;
-//    String date;
-//    List<String> paymentsList;
-//
-//
-//    public Payment() {
-//        super();
-//        this.db = DatabaseConnection.getInstance();
-//        this.conn = db.getConnection();
-//        this.paymentsList=new ArrayList<>();
-//    }
-//
-//    public static Payment getInstance() {
-//        if (instance == null) {
-//            instance = new Payment();
-//        }
-//        return instance;
-//    }
-//
-//
-//    public List<Payment> getAllReceivedPaymentsWithCustomerIdNo(String IdNo) {
-//        list = new ArrayList<>();
-//
-//        try {
-//            String query = "SELECT ReceivedPayments,Date FROM receivedpayments where CustomerId=(Select id from customers where IdNo=?)";
-//            pstat = conn.prepareStatement(query);
-//            pstat.setString(1, IdNo);
-//            ResultSet rs = pstat.executeQuery();
-//
-//            while (rs.next()) {
-//                Payment payments = new Payment();
-//                payments.setReceivedPayments(rs.getString("ReceivedPayments"));
-//                payments.setDate(rs.getString("Date"));
-//                list.add(payments);
-//            }
-//
-//
-//            pstat.close();
-//            rs.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//
-//        }
-//        return list;
-//    }
-//
-//    public void setReceievedPaymentsWithPrepaeredStatement(String query) {
-//        try {
-//            Payment rePayment = Payment.getInstance();
-//            pstat = conn.prepareStatement(query);
-//            pstat.setString(1, rePayment.getCustomerIdNo());
-//            pstat.setString(2, rePayment.getReceivedPayment());
-//
-//            pstat.executeUpdate();
-//            pstat.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public String getCustomerIdNo() {
-//        return customerIdNo;
-//    }
-//
-//    public void setCustomerIdNo(String customerIdNo) {
-//        this.customerIdNo = customerIdNo;
-//    }
-//
-//    public String getReceivedPayment() {
-//        return receivedPayments;
-//    }
-//
-//    public void setReceivedPayments(String receivedPayments) {
-//        this.receivedPayments = receivedPayments;
-//    }
-//
-//    public String getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(String date) {
-//        this.date = date;
-//    }
-//
-//    public List<String> getPaymentsList() {
-//        return paymentsList;
-//    }
-//
-//    public void setPaymentsList(List<String> paymentsList) {
-//        this.paymentsList = paymentsList;
-//    }
-//}
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -122,9 +10,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class Payment {
 
@@ -138,7 +25,7 @@ public class Payment {
     private Payment() {
         this.db = FirebaseDatabase.getInstance().getReference("receivedpayments");
 
-        this.paymentsList=new ArrayList<>();
+        this.paymentsList = new ArrayList<>();
 
     }
 
@@ -210,19 +97,38 @@ public class Payment {
 //    }
 
     // Get all received payments with customer id
-    public List<String> getAllReceivedPaymentsWithCustomerIdNo() {
-        List<String> list = new ArrayList<>();
-
-        db.child("receivedpayments").orderByChild("customerId").equalTo(getCustomerIdNo())
+    public List<String> getAllReceivedPaymentsWithCustomerIdNo(Activity activity) {
+    try {
+        db.orderByChild("customerId").equalTo(getCustomerIdNo())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot document : dataSnapshot.getChildren()) {
-                            Payment payment = document.getValue(Payment.class);
-                            String p=document.child("receivedPayment").getValue(String.class);
-                            list.add(p);
+                            String p = document.child("receivedPayment").getValue(String.class);
+                            paymentsList.add(p);
                         }
 
+                        // Firebase işlemleri bittiğinde gecikme ekleniyor
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Veri çekme işlemi
+                                try {
+                                    // Burada veriyi çekmek için sleep ekleyebilirsiniz
+                                    Thread.sleep(2000); // 2 saniye bekletme
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+
+                                // UI güncellemesi yapmak için
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // UI'deki işlemler
+                                    }
+                                });
+                            }
+                        }).start();
                     }
 
                     @Override
@@ -230,33 +136,43 @@ public class Payment {
                         System.out.println("Error: " + databaseError.getMessage());
                     }
                 });
+    }catch (Exception e){
+        Log.e("FirebaseDebug", "gecersiz model: " + e.getMessage());
 
-        return list;
     }
 
 
-    // Firebase Realtime Database'den tüm araç plakalarını getir
-    public List<String> getAllVehicleWithChassisNo() {
-        List<String> list = new ArrayList<>();
-        try {
-            db.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        list.add(child.getKey());
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    databaseError.toException().printStackTrace();
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
+        return paymentsList;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

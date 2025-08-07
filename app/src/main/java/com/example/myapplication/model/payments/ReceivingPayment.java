@@ -1,181 +1,15 @@
 package com.example.myapplication.model.payments;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.example.myapplication.model.DatabaseConnection;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.concurrent.CountDownLatch;
-
-import model.payments.Payment;
-
-
-//public class ReceivingPayment {
-//    private static ReceivingPayment instance;
-//    DatabaseConnection db;
-//    int paymentsId;
-//    String receivedPayment;
-//    String customerIdNo;
-//    private PreparedStatement pstat = null;
-//    private Connection conn = null;
-//    private Statement stat = null;
-//
-//    public ReceivingPayment() {
-//        super();
-//        this.db = DatabaseConnection.getInstance();
-//        this.conn = db.getConnection();
-//    }
-//
-//    public static ReceivingPayment getInstance() {
-//        if (instance == null) {
-//            instance = new ReceivingPayment();
-//        }
-//        return instance;
-//    }
-//
-//    public String getRemainingPaymentAmount() {
-//        String query = "Select RemainingPaymentAmount from vehiclessold where CustomerId=((Select id from customers where IdNo=?))";
-//        String amount = "";
-//        try {
-//            pstat = conn.prepareStatement(query);
-//            pstat.setString(1, ReceivingPayment.getInstance().getCustomerIdNo());
-//            ResultSet rs = pstat.executeQuery();
-//
-//            if (rs.next()) {
-//                amount = rs.getString("RemainingPaymentAmount");
-//            }
-//            pstat.close();
-//            rs.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//
-//        }
-//        return amount;
-//    }
-//
-//    public void setRemainingPaymentAmount(String query) {
-//        try {
-//            ReceivingPayment rePayment = ReceivingPayment.getInstance();
-//            pstat = conn.prepareStatement(query);
-//            pstat.setString(1, rePayment.getReceivedPayment());
-//            pstat.setString(2, rePayment.getCustomerIdNo());
-//
-//            pstat.executeUpdate();
-//            pstat.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void setRemainingPaymentAmount() {
-//        Payment payment = Payment.getInstance();
-//        try {
-//            String query = "UPDATE vehiclessold SET RemainingPaymentAmount=RemainingPaymentAmount-?  where CustomerId=(Select id from customers where IdNo=?)";
-//            pstat = conn.prepareStatement(query);
-//            pstat.setString(1, payment.getReceivedPayment());
-//            pstat.setString(2, payment.getCustomerIdNo());
-//
-//            pstat.executeUpdate();
-//            pstat.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void savePayment() {
-//        try {
-//
-//            String query = "insert into receivedpayments(CustomerId,ReceivedPayments)values((Select id from  customers where IdNo=?) ,?)";
-//            setReceievedPaymentsWithPrepaeredStatement(query);
-//
-//            String query2 = "UPDATE vehiclessold SET RemainingPaymentAmount = RemainingPaymentAmount - ? WHERE CustomerId = (SELECT id FROM customers WHERE IdNo = ?);";
-//            setRemainingPaymentAmount(query2);
-//
-////            JOptionPane.showMessageDialog(null, "Ödeme başarıyla alındı.", "  ", JOptionPane.INFORMATION_MESSAGE);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-////            JOptionPane.showMessageDialog(null, "Müşteri bulunamadı.", "  ", JOptionPane.INFORMATION_MESSAGE);
-//
-//
-//        }
-//    }
-//
-//    public void setReceievedPaymentsWithPrepaeredStatement(String query) {
-//        try {
-//            ReceivingPayment rePayment = ReceivingPayment.getInstance();
-//            pstat = conn.prepareStatement(query);
-//            pstat.setString(1, rePayment.getCustomerIdNo());
-//            pstat.setString(2, rePayment.getReceivedPayment());
-//
-//            pstat.executeUpdate();
-//            pstat.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void getReceievedPaymentsWithPrepaeredStatement(String query) {
-//        ReceivingPayment rePayment = ReceivingPayment.getInstance();
-//
-//        try {
-//            stat = conn.createStatement();
-//            ResultSet rs = stat.executeQuery(query);
-//
-//            if (rs.next()) {
-//
-//                rePayment.setCustomerIdNo(rs.getString("CustomerId"));
-//                rePayment.setReceivedPayment(rs.getString("ReceivedPayment"));
-//
-//            }
-//            stat.close();
-//            rs.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public String getCustomerIdNo() {
-//        return customerIdNo;
-//    }
-//
-//    public void setCustomerIdNo(String customerIdNo) {
-//        this.customerIdNo = customerIdNo;
-//    }
-//
-//    public int getPaymentsId() {
-//        return paymentsId;
-//    }
-//
-//    public void setPaymentsId(int paymentsId) {
-//        this.paymentsId = paymentsId;
-//    }
-//
-//    public String getReceivedPayment() {
-//        return receivedPayment;
-//    }
-//
-//    public void setReceivedPayment(String receivedPayment) {
-//        this.receivedPayment = receivedPayment;
-//    }
-//
-//}
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import java.util.concurrent.CountDownLatch;
 
 public class ReceivingPayment {
     private static ReceivingPayment instance;
@@ -184,8 +18,8 @@ public class ReceivingPayment {
     private int paymentsId;
     private String receivedPayment;
     private String customerIdNo;
-    private String remainingPaymentAmountString="";
-    private String newRemainingPaymentAmountString="";
+    private String remainingPaymentAmountString = "";
+    private String newRemainingPaymentAmountString = "";
 
     public ReceivingPayment() {
         super();
@@ -199,6 +33,7 @@ public class ReceivingPayment {
         }
         return instance;
     }
+
     public void getRemainingPaymentAmount(Activity activity) {
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("vehiclessold");
         Query query = databaseRef.orderByChild("customerIdNo").equalTo(getCustomerIdNo());
@@ -225,7 +60,6 @@ public class ReceivingPayment {
             }
         });
     }
-
 
 
 //    public String getRemainingPaymentAmount(Activity activity) {
@@ -357,7 +191,7 @@ public class ReceivingPayment {
 //    }
 
 
-//
+    //
 //    public void setRemainingPaymentAmount(Activity activity) {
 //        try {
 //            DatabaseReference vehiclesRef = ref.child("vehiclessold").child(getCustomerIdNo());
@@ -421,127 +255,89 @@ public class ReceivingPayment {
 //        Toast.makeText(activity, "Güncelleme sırasında hata oluştu: " + e.getMessage(), Toast.LENGTH_LONG).show();
 //    }
 //}
-public void setRemainingPaymentAmount(Activity activity) {
-    try {
-        DatabaseReference vehiclesRef = ref.child("vehiclessold");
-
-        vehiclesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                boolean found = false;
-
-                for (DataSnapshot vehicleSnapshot : dataSnapshot.getChildren()) {
-                    String existingCustomerIdNo = vehicleSnapshot.child("customerIdNo").getValue(String.class);
-                    if (existingCustomerIdNo != null && existingCustomerIdNo.equals(customerIdNo)) {
-                        found = true;
-
-                        // Daha önce alınan değerleri kullan
-                        String remainingPaymentAmount = getRemainingPaymentAmountString();
-                        String receivedPayment = getReceivedPayment();
-
-                        if (remainingPaymentAmount != null && receivedPayment != null) {
-                            double newRemainingAmount = Double.parseDouble(remainingPaymentAmount) - Double.parseDouble(receivedPayment);
-                            int roundedAmount = (int) newRemainingAmount;
-
-                            // Kalan ödeme miktarını güncelle
-                            setNewRemainingPaymentAmountString(String.valueOf(roundedAmount));
-                            vehicleSnapshot.child("remainingPaymentAmount").getRef().setValue(String.valueOf(roundedAmount));
-                            Toast.makeText(activity, "Kalan ödeme miktarı güncellendi: " + roundedAmount, Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(activity, "Kalan ödeme miktarı veya alınan ödeme geçersiz.", Toast.LENGTH_LONG).show();
-                        }
-                        break; // Müşteri bulundu, döngüden çık
-                    }
-                }
-
-                if (!found) {
-                    Toast.makeText(activity, "Müşteri bulunamadı.", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(activity, "Veri alımında hata oluştu.", Toast.LENGTH_LONG).show();
-            }
-        });
-    } catch (Exception e) {
-        e.printStackTrace();
-        Toast.makeText(activity, "Güncelleme sırasında hata oluştu: " + e.getMessage(), Toast.LENGTH_LONG).show();
-    }
-}
-
-    // Save the received payment record
-    public void savePayment(Activity activity) {
+    public void setRemainingPaymentAmount(Activity activity) {
         try {
+            DatabaseReference vehiclesRef = ref.child("vehiclessold");
 
-            ref.child("customers").orderByChild("idNumber").equalTo(getCustomerIdNo()).addValueEventListener(new ValueEventListener() {
+            vehiclesRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot document : dataSnapshot.getChildren()) {
-                        String customerId = document.getKey();
-                        ref.child("receivedpayments").push().setValue(new PaymentRecord(customerId, getReceivedPayment()));
+                    boolean found = false;
 
-                        ref.child("vehiclessold").child(customerId).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot documentSnapshot) {
-                                String remainingPaymentAmount = documentSnapshot.child("remainingPaymentAmount").getValue(String.class);
-                                double newRemainingAmount = Double.parseDouble(remainingPaymentAmount) - Double.parseDouble(getReceivedPayment());
-                                ref.child("vehiclessold").child(getCustomerIdNo()).child("remainingPaymentAmount").setValue(String.valueOf(newRemainingAmount));
-                            }
+                    for (DataSnapshot vehicleSnapshot : dataSnapshot.getChildren()) {
+                        String existingCustomerIdNo = vehicleSnapshot.child("customerIdNo").getValue(String.class);
+                        if (existingCustomerIdNo != null && existingCustomerIdNo.equals(customerIdNo)) {
+                            found = true;
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                                // Handle error
+                            // Daha önce alınan değerleri kullan
+                            String remainingPaymentAmount = getRemainingPaymentAmountString();
+                            String receivedPayment = getReceivedPayment();
+
+                            if (remainingPaymentAmount != null && receivedPayment != null) {
+                                double newRemainingAmount = Double.parseDouble(remainingPaymentAmount) - Double.parseDouble(receivedPayment);
+                                int roundedAmount = (int) newRemainingAmount;
+
+                                // Kalan ödeme miktarını güncelle
+                                setNewRemainingPaymentAmountString(String.valueOf(roundedAmount));
+                                vehicleSnapshot.child("remainingPaymentAmount").getRef().setValue(String.valueOf(roundedAmount));
+                                Toast.makeText(activity, "Kalan ödeme miktarı güncellendi: " + roundedAmount, Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(activity, "Kalan ödeme miktarı veya alınan ödeme geçersiz.", Toast.LENGTH_LONG).show();
                             }
-                        });
+                            break; // Müşteri bulundu, döngüden çık
+                        }
+                    }
+
+                    if (!found) {
+                        Toast.makeText(activity, "Müşteri bulunamadı.", Toast.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-                    // Handle error
+                    Toast.makeText(activity, "Veri alımında hata oluştu.", Toast.LENGTH_LONG).show();
                 }
             });
-        }catch (Exception e){
-            Toast.makeText(activity, "savepaymenthata: "+ e.getMessage(), Toast.LENGTH_LONG).show();
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(activity, "Güncelleme sırasında hata oluştu: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-    // Data class for Firebase records
-    public static class PaymentRecord {
-        private String customerId;
-        private String receivedPayment;
+    // Save the received payment record
+    public void savePayment( ) {
+        try {
 
-        public PaymentRecord() { }
+                        ref.push().setValue(new PaymentRecord(getCustomerIdNo(), getReceivedPayment()));
 
-        public PaymentRecord(String customerId, String receivedPayment) {
-            this.customerId = customerId;
-            this.receivedPayment = receivedPayment;
-        }
+                        db.getReference("vehiclessold").child(getCustomerIdNo()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot documentSnapshot) {
+                                String remainingPaymentAmount = documentSnapshot.child("remainingPaymentAmount").getValue(String.class);
+                                double newRemainingAmount = Double.parseDouble(remainingPaymentAmount) - Double.parseDouble(getReceivedPayment());
+                                setRemainingPaymentAmountString(String.valueOf(newRemainingAmount));
+                                ref.child("vehiclessold").child(getCustomerIdNo()).child("remainingPaymentAmount").setValue(getNewRemainingPaymentAmountString());
 
-        public String getCustomerId() {
-            return customerId;
-        }
+                            }
 
-        public void setCustomerId(String customerId) {
-            this.customerId = customerId;
-        }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                // Handle error
+                                Log.e("database errror", "onCancelled: ");
+                            }
+                        });
 
-        public String getReceivedPayment() {
-            return receivedPayment;
-        }
+        } catch (Exception e) {
+            Log.e(" errror", "onCancelled: ");
 
-        public void setReceivedPayment(String receivedPayment) {
-            this.receivedPayment = receivedPayment;
         }
     }
-
-    // Getters and Setters
 
     public String getCustomerIdNo() {
         return customerIdNo;
     }
+
+    // Getters and Setters
 
     public void setCustomerIdNo(String customerIdNo) {
         this.customerIdNo = customerIdNo;
@@ -577,5 +373,35 @@ public void setRemainingPaymentAmount(Activity activity) {
 
     public void setNewRemainingPaymentAmountString(String newRemainingPaymentAmountString) {
         this.newRemainingPaymentAmountString = newRemainingPaymentAmountString;
+    }
+
+    // Data class for Firebase records
+    public static class PaymentRecord {
+        private String customerId;
+        private String receivedPayment;
+
+        public PaymentRecord() {
+        }
+
+        public PaymentRecord(String customerId, String receivedPayment) {
+            this.customerId = customerId;
+            this.receivedPayment = receivedPayment;
+        }
+
+        public String getCustomerId() {
+            return customerId;
+        }
+
+        public void setCustomerId(String customerId) {
+            this.customerId = customerId;
+        }
+
+        public String getReceivedPayment() {
+            return receivedPayment;
+        }
+
+        public void setReceivedPayment(String receivedPayment) {
+            this.receivedPayment = receivedPayment;
+        }
     }
 }

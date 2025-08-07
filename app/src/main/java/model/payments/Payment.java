@@ -9,17 +9,15 @@ import java.util.List;
 import model.DatabaseConnection;
 
 public class Payment {
-    DatabaseConnection db;
-    private PreparedStatement pstat = null;
-    private Connection conn = null;
-//	private Statement stat = null;
-
     private static Payment instance;
+    DatabaseConnection db;
     List<Payment> list;
-
+//	private Statement stat = null;
     String customerIdNo;
     String receivedPayments;
     String date;
+    private PreparedStatement pstat = null;
+    private Connection conn = null;
 
     public Payment() {
         super();

@@ -150,7 +150,7 @@ public class SoldVehicleActivity extends AppCompatActivity {
             receivingPaymentCommand.execute();
             Toast.makeText(this, "1A.", Toast.LENGTH_LONG).show();
 
-            receivingPayment.savePayment(this);
+            receivingPayment.savePayment();
             Toast.makeText(this, "2A.", Toast.LENGTH_LONG).show();
 
             receivingPayment.setRemainingPaymentAmount(this);
@@ -177,22 +177,22 @@ public class SoldVehicleActivity extends AppCompatActivity {
 
     public void setUpSpinners() {
         try {
-Log.i("V","Load Spinner Start");
+            Log.i("V", "Load Spinner Start");
 
             ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_spinner_item,vehicleTypes);
+                    android.R.layout.simple_spinner_item, vehicleTypes);
             typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             vehicleTypeSpinner.setAdapter(typeAdapter);
             vehicleTypeSpinner.setOnItemSelectedListener(new VehicleTypeSelectedListener());
             vehicleTypeSpinner.setSelection(0);
             setSelectedType("Yeni Araç");
             updateVehicleModels();
-Log.i("V","Load Spinner End");
+            Log.i("V", "Load Spinner End");
 
-        }catch (Exception e){
-            Log.e("V","Err Spinner", e);
+        } catch (Exception e) {
+            Log.e("V", "Err Spinner", e);
 
-            Toast.makeText(this,  e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 
         }
 
@@ -200,14 +200,14 @@ Log.i("V","Load Spinner End");
 
     private void updateVehicleModels() {
         try {
-            if (getSelectedType() == "Araç türü seçiniz." || getSelectedModel() == "Araç modeli seçiniz." ) {
+            if (getSelectedType() == "Araç türü seçiniz." || getSelectedModel() == "Araç modeli seçiniz.") {
                 return;
             }
             vehicleModels.clear();
             if (getSelectedType().equals("Takas Araç")) {
-                vehicleModels =tradeInVehicleGetModelsCommand.execute();
+                vehicleModels = tradeInVehicleGetModelsCommand.execute();
             } else if (getSelectedType().equals("İkinci El Araç")) {
-                vehicleModels=secondHandVehicleGetModelsCommand.execute();
+                vehicleModels = secondHandVehicleGetModelsCommand.execute();
             } else if (getSelectedType().equals("Yeni Araç")) {
                 vehicleModels = newVehicleGetModelsCommand.execute();
             }
@@ -224,7 +224,7 @@ Log.i("V","Load Spinner End");
             modelAdapter.notifyDataSetChanged();
             vehicleModelSpinner.setOnItemSelectedListener(new VehicleModelSelectedListener()); // Aç
 
-        } catch (Exception e){
+        } catch (Exception e) {
 
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
 
@@ -258,66 +258,31 @@ Log.i("V","Load Spinner End");
 //    }
 
     private void updateVehicleInfo() {
-       try{
-           if (getSelectedType() == "Araç türü seçiniz." || getSelectedModel() == "Araç modeli seçiniz." ) {
+        try {
+            if (getSelectedType() == "Araç türü seçiniz." || getSelectedModel() == "Araç modeli seçiniz.") {
                 return;
-           }
-           if (getSelectedType().equals("Takas Araç")) {
-               tradeInVehicle.setLicensePlate(getSelectedModel());
-               tradeInVehicle.setVehicle(this);
-               tradeInVehicleSetInfoCommand.execute();
-           } else if (getSelectedType().equals("İkinci El Araç")) {
-               secondHandVehicle.setLicensePlate(getSelectedModel());
-               secondHandVehicle.setVehicle(this);
-               secondHandVehicleSetInfoCommand.execute();
-           } else if (getSelectedType().equals("Yeni Araç")) {
+            }
+            if (getSelectedType().equals("Takas Araç")) {
+                tradeInVehicle.setLicensePlate(getSelectedModel());
+                tradeInVehicle.setVehicle(this);
+                tradeInVehicleSetInfoCommand.execute();
+            } else if (getSelectedType().equals("İkinci El Araç")) {
+                secondHandVehicle.setLicensePlate(getSelectedModel());
+                secondHandVehicle.setVehicle(this);
+                secondHandVehicleSetInfoCommand.execute();
+            } else if (getSelectedType().equals("Yeni Araç")) {
                 newVehicle.setChassisNo(getSelectedModel());
                 newVehicle.setVehicle(this);
                 newVehicleSetInfoCommand.execute();
-           }
-       }
-    catch (NullPointerException e) {
-           Toast.makeText(this, "Lütfen araç tipi ve modelini seçtiğinizden emin olun!", Toast.LENGTH_LONG).show();
-       }catch (Exception e){
-        Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-       }
-    }
-
-
-
-
-    // TODO: Bunu dene OnClickListener
-    //spinner listeners
-    private class VehicleTypeSelectedListener implements AdapterView.OnItemSelectedListener {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            setSelectedType(parent.getItemAtPosition(position).toString());
-            updateVehicleModels();
-            clearUI();
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
+            }
+        } catch (NullPointerException e) {
+            Toast.makeText(this, "Lütfen araç tipi ve modelini seçtiğinizden emin olun!", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
-
-    private class VehicleModelSelectedListener implements AdapterView.OnItemSelectedListener {
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            setSelectedModel(parent.getItemAtPosition(position).toString());
-            clearUI();
-            updateVehicleInfo();
-
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
-    }
-
-
-    public void clearUI(){
+    public void clearUI() {
         editTextModel.setText("");
         editTextYear.setText("");
         editTextPrice.setText("");
@@ -325,8 +290,6 @@ Log.i("V","Load Spinner End");
         editTextChassisNo.setText("");
         editTextExplanation.setText("");
     }
-
-
 
     public String getSelectedType() {
         return selectedType;
@@ -353,6 +316,35 @@ Log.i("V","Load Spinner End");
 
     public void setVehicleModels(List<String> vehicleModels) {
         this.vehicleModels = vehicleModels;
+    }
+
+    // TODO: Bunu dene OnClickListener
+    //spinner listeners
+    private class VehicleTypeSelectedListener implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            setSelectedType(parent.getItemAtPosition(position).toString());
+            updateVehicleModels();
+            clearUI();
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
+    }
+
+    private class VehicleModelSelectedListener implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            setSelectedModel(parent.getItemAtPosition(position).toString());
+            clearUI();
+            updateVehicleInfo();
+
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+        }
     }
 
     // Tüm değişkenler aynı şekilde tanımlanmış

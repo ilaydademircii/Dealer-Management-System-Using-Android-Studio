@@ -57,7 +57,6 @@ public class ReceivingPaymentActivity extends AppCompatActivity {
             editTextRemainingPayment.setText(payment.getRemainingPaymentAmountString());
 
 
-
             Toast.makeText(this, "Başarıyla görüntülendi...", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,7 +70,7 @@ public class ReceivingPaymentActivity extends AppCompatActivity {
     public void onPaymentButtonClicked(View view) {
         try {
             receivingPaymentCommand.execute();
-            payment.savePayment(this);
+            payment.savePayment();
             payment.setRemainingPaymentAmount(this);
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,18 +7,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import model.Customer;
 import model.DatabaseConnection;
 
 public class SoldVehicle {
-    DatabaseConnection db;
-    private PreparedStatement pstat = null;
-    private Connection conn = null;
-    private Statement stat = null;
-
     private static SoldVehicle instance;
-
+    DatabaseConnection db;
     String customerIdNo;
     String model;
     String year;
@@ -30,8 +24,10 @@ public class SoldVehicle {
     String explanation;
     String date;
     String receivedPayment;
-
     Customer customer;
+    private PreparedStatement pstat = null;
+    private Connection conn = null;
+    private Statement stat = null;
 
     public SoldVehicle() {
         super();
@@ -57,20 +53,20 @@ public class SoldVehicle {
                     setRemainingPaymentAmount(getSalePrice());
                     setVehicleWithPrepaeredStatement(query);
 
-    //                JOptionPane.showMessageDialog(null, "Araç başarıyla satıldı.", "  ",
-      //                      JOptionPane.INFORMATION_MESSAGE);
+                    //                JOptionPane.showMessageDialog(null, "Araç başarıyla satıldı.", "  ",
+                    //                      JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     String query = "UPDATE vehiclessold SET SalePrice=?,RemainingPaymentAmount=?,Explanation=? WHERE ChassisNo=?";
                     setRemainingPaymentAmount(getSalePrice());
                     updateVehicleWithPrepaeredStatement(query);
 
-        //            JOptionPane.showMessageDialog(null, "Satılan araç güncellendi.", "  ",
-          //                  JOptionPane.INFORMATION_MESSAGE);
+                    //            JOptionPane.showMessageDialog(null, "Satılan araç güncellendi.", "  ",
+                    //                  JOptionPane.INFORMATION_MESSAGE);
 
                 }
             } else {
-           //     JOptionPane.showMessageDialog(null, "Şasi Numarası boş bırakılamaz.", " Hata ",
-            //            JOptionPane.ERROR_MESSAGE);
+                //     JOptionPane.showMessageDialog(null, "Şasi Numarası boş bırakılamaz.", " Hata ",
+                //            JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception e) {
@@ -98,7 +94,6 @@ public class SoldVehicle {
 
         }
     }
-
 
 
     public void deleteTradeInVehicle() {
@@ -163,9 +158,6 @@ public class SoldVehicle {
         }
         return list;
     }
-
-
-
 
 
     public void updateVehicleWithPrepaeredStatement(String query) {

@@ -5,20 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-
 import model.DatabaseConnection;
 
 public class ReceivingPayment {
-    DatabaseConnection db;
-    private PreparedStatement pstat = null;
-    private Connection conn = null;
-    private Statement stat = null;
-
     private static ReceivingPayment instance;
-
+    DatabaseConnection db;
     int paymentsId;
     String receivedPayment;
     String customerIdNo;
+    private PreparedStatement pstat = null;
+    private Connection conn = null;
+    private Statement stat = null;
 
     public ReceivingPayment() {
         super();
@@ -35,7 +32,7 @@ public class ReceivingPayment {
 
     public String getRemainingPaymentAmount() {
         String query = "Select RemainingPaymentAmount from vehiclessold where CustomerId=((Select id from customers where IdNo=?))";
-        String amount="";
+        String amount = "";
         try {
             pstat = conn.prepareStatement(query);
             pstat.setString(1, ReceivingPayment.getInstance().getCustomerIdNo());
@@ -51,6 +48,21 @@ public class ReceivingPayment {
 
         }
         return amount;
+    }
+
+    public void setRemainingPaymentAmount(String query) {
+        try {
+            ReceivingPayment rePayment = ReceivingPayment.getInstance();
+            pstat = conn.prepareStatement(query);
+            pstat.setString(1, rePayment.getReceivedPayment());
+            pstat.setString(2, rePayment.getCustomerIdNo());
+
+            pstat.executeUpdate();
+            pstat.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setRemainingPaymentAmount() {
@@ -74,7 +86,7 @@ public class ReceivingPayment {
             String query = "insert into receivedpayments(CustomerId,ReceivedPayments)values((Select id from  customers where IdNo=?) ,?)";
             setReceievedPaymentsWithPrepaeredStatement(query);
 
-            String query2="UPDATE vehiclessold SET RemainingPaymentAmount = RemainingPaymentAmount - ? WHERE CustomerId = (SELECT id FROM customers WHERE IdNo = ?);";
+            String query2 = "UPDATE vehiclessold SET RemainingPaymentAmount = RemainingPaymentAmount - ? WHERE CustomerId = (SELECT id FROM customers WHERE IdNo = ?);";
             setRemainingPaymentAmount(query2);
 
 
@@ -82,21 +94,6 @@ public class ReceivingPayment {
             e.printStackTrace();
 
 
-        }
-    }
-
-    public void setRemainingPaymentAmount(String query) {
-        try {
-            ReceivingPayment rePayment = ReceivingPayment.getInstance();
-            pstat = conn.prepareStatement(query);
-            pstat.setString(1, rePayment.getReceivedPayment());
-            pstat.setString(2, rePayment.getCustomerIdNo());
-
-            pstat.executeUpdate();
-            pstat.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

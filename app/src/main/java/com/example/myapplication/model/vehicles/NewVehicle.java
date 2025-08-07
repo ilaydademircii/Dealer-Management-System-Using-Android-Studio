@@ -323,6 +323,7 @@ import java.util.Map;
 
 public class NewVehicle {
     private static NewVehicle instance;
+    List<String> list;
     private DatabaseReference db;
     private String model;
     private String year;
@@ -331,8 +332,6 @@ public class NewVehicle {
     private double kdvRate;
     private String explanation;
     private String date;
-
-    List<String> list;
 
     public NewVehicle() {
         super();
@@ -346,7 +345,7 @@ public class NewVehicle {
         return instance;
     }
 
-//    // Firebase Realtime Database'den şasi numarasına göre araç getirme
+    //    // Firebase Realtime Database'den şasi numarasına göre araç getirme
 //    public void setVehicle(String chassisNo, Activity activity) {
 //        if (chassisNo != null && !chassisNo.isEmpty()) {
 //            try {
@@ -387,11 +386,11 @@ public class NewVehicle {
                         if (dataSnapshot.exists()) {
                             NewVehicle vehicle = dataSnapshot.getValue(NewVehicle.class);
                             if (vehicle != null) {
-                                    setModel(vehicle.getModel());
-                                    setYear(vehicle.getYear());
-                                    setPrice(vehicle.getPrice());
-                                    setChassisNo(vehicle.getChassisNo());
-                                    setExplanation(vehicle.getExplanation());
+                                setModel(vehicle.getModel());
+                                setYear(vehicle.getYear());
+                                setPrice(vehicle.getPrice());
+                                setChassisNo(vehicle.getChassisNo());
+                                setExplanation(vehicle.getExplanation());
 
                             } else {
                                 Toast.makeText(activity, "Araç bilgisi alınamadı.", Toast.LENGTH_SHORT).show();

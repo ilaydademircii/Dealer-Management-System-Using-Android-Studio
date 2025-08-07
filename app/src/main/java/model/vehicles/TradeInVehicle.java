@@ -7,19 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import model.Customer;
 import model.DatabaseConnection;
 
 public class TradeInVehicle {
 
-    DatabaseConnection db;
-    private PreparedStatement pstat = null;
-    private Connection conn = null;
-    private Statement stat = null;
-
     private static TradeInVehicle instance;
-
+    DatabaseConnection db;
     String customerIdNo;
     String model;
     String year;
@@ -28,8 +22,10 @@ public class TradeInVehicle {
     String licensePlate;
     String explanation;
     String date;
-
     Customer customer;
+    private PreparedStatement pstat = null;
+    private Connection conn = null;
+    private Statement stat = null;
 
     public TradeInVehicle() {
         super();
@@ -86,18 +82,18 @@ public class TradeInVehicle {
                     String query = "insert into tradeinvehicles(CustomerId,Model,Year,Price,ChassisNo,LicensePlate,Explanation)values((Select id from customers where IdNo=?),?,?,?,?,?,?)";
                     setVehicleWithPrepaeredStatement(query);
 
-             //       JOptionPane.showMessageDialog(null, "Takas araç başarıyla eklendi.", "  ",
-               //             JOptionPane.INFORMATION_MESSAGE);
+                    //       JOptionPane.showMessageDialog(null, "Takas araç başarıyla eklendi.", "  ",
+                    //             JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     String query = "UPDATE tradeinvehicles SET CustomerId=(Select id from customers where IdNo=?), Model=?,Year=?,Price=?,LicensePlate=?,Explanation=? WHERE ChassisNo=?";
                     setVehicleWithPrepaeredStatement(query);
 
-         //           JOptionPane.showMessageDialog(null, "Takas araç başarıyla güncellendi.", "  ",
-           //                 JOptionPane.INFORMATION_MESSAGE);
+                    //           JOptionPane.showMessageDialog(null, "Takas araç başarıyla güncellendi.", "  ",
+                    //                 JOptionPane.INFORMATION_MESSAGE);
 
                 }
             } else {
-       //         JOptionPane.showMessageDialog(null, "Plaka boş bırakılamaz.", " Hata ", JOptionPane.ERROR_MESSAGE);
+                //         JOptionPane.showMessageDialog(null, "Plaka boş bırakılamaz.", " Hata ", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception e) {

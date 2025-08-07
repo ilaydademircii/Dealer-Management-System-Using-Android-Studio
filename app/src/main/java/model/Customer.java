@@ -6,20 +6,17 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 
-
 public class Customer {
-    DatabaseConnection db;
-    private PreparedStatement pstat = null;
-    private Connection conn = null;
-    private Statement stat = null;
-
     private static Customer instance;
-
+    DatabaseConnection db;
     String name;
     String surname;
     String idNumber;
     String phoneNumber;
     String address;
+    private PreparedStatement pstat = null;
+    private Connection conn = null;
+    private Statement stat = null;
 
     public Customer() {
         super();
@@ -43,8 +40,8 @@ public class Customer {
 
                 }
             } else {
-     //           JOptionPane.showMessageDialog(null, "Tc Kimlik numarası boş bırakılamaz.", " Hata ",
-       //                 JOptionPane.ERROR_MESSAGE);
+                //           JOptionPane.showMessageDialog(null, "Tc Kimlik numarası boş bırakılamaz.", " Hata ",
+                //                 JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception e) {

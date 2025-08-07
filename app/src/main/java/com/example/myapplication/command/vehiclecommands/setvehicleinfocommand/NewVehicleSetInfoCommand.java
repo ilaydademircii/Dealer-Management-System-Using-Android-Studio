@@ -7,10 +7,6 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.model.vehicles.NewVehicle;
 
-import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.util.Locale;
-
 public class NewVehicleSetInfoCommand implements SetVehicleInfoCommand {
     // Araç bilgilerini görüntülemek için EditText alanları
 
@@ -26,7 +22,7 @@ public class NewVehicleSetInfoCommand implements SetVehicleInfoCommand {
     public NewVehicleSetInfoCommand(Activity activity) {
         super();
         this.vehicle = NewVehicle.getInstance();
-        this.activity=activity;
+        this.activity = activity;
         // Activity'den XML'deki EditText bileşenlerini alıyoruz
         editTextModel = activity.findViewById(R.id.model);
         editTextYear = activity.findViewById(R.id.year);
@@ -37,25 +33,25 @@ public class NewVehicleSetInfoCommand implements SetVehicleInfoCommand {
 
     @Override
     public void execute() {
-    try{
+        try {
 
-        // EditText'leri araç bilgileri ile güncelliyoruz
-        editTextModel.setText(vehicle.getModel());
-        editTextYear.setText(vehicle.getYear());
+            // EditText'leri araç bilgileri ile güncelliyoruz
+            editTextModel.setText(vehicle.getModel());
+            editTextYear.setText(vehicle.getYear());
 //        // Fiyatı doğru formatta görüntülüyoruz
 //        BigDecimal priceAsBigDecimal = new BigDecimal(vehicle.getPrice());
 //        NumberFormat numberFormat = NumberFormat.getNumberInstance(new Locale("tr", "TR"));
 //        String formattedPrice = numberFormat.format(priceAsBigDecimal) + " TL";
 //        editTextPrice.setText(formattedPrice);
-        // Fiyatı kontrol et ve yazdır
-        editTextPrice.setText(vehicle.getPrice());
-        editTextChassisNo.setText(vehicle.getChassisNo());
-        editTextExplanation.setText(vehicle.getExplanation());
+            // Fiyatı kontrol et ve yazdır
+            editTextPrice.setText(vehicle.getPrice());
+            editTextChassisNo.setText(vehicle.getChassisNo());
+            editTextExplanation.setText(vehicle.getExplanation());
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        Toast.makeText(activity, "Bir hata oluştu: " + e.getMessage(), Toast.LENGTH_LONG).show();
-    }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(activity, "Bir hata oluştu: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
     }
 }

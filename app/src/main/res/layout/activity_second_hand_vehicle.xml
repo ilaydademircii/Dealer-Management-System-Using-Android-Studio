@@ -79,8 +79,7 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="16dp"
                 android:hint="Phone Number"
-                android:inputType="number"
-                />
+                android:inputType="number" />
 
             <!-- Address -->
             <TextView

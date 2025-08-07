@@ -1,13 +1,8 @@
 package com.example.myapplication.model;
 
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
-import com.google.firebase.database.ValueEventListener;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -152,32 +147,27 @@ public class Customer {
 //        this.address = address;
 //    }
 
-        private static Customer instance;
-        private DatabaseReference db;
+    private static Customer instance;
+    // Müşteri bilgileri
+    String name;
+    String surname;
+    String idNumber;
+    String phoneNumber;
+    String address;
+    private DatabaseReference db;
+    private String date; // yeni müşteri oluşturulduğunda otomatik olarak atanacak
 
-        // Müşteri bilgileri
-        String name;
-        String surname;
-        String idNumber;
-        String phoneNumber;
-        String address;
+    private Customer() {
+        // Firebase Realtime Database instance oluşturuluyor
+        this.db = FirebaseDatabase.getInstance().getReference("customers");
+    }
 
-
-
-
-        private String date; // yeni müşteri oluşturulduğunda otomatik olarak atanacak
-
-        private Customer() {
-            // Firebase Realtime Database instance oluşturuluyor
-            this.db = FirebaseDatabase.getInstance().getReference("customers");
+    public static Customer getInstance() {
+        if (instance == null) {
+            instance = new Customer();
         }
-
-        public static Customer getInstance() {
-            if (instance == null) {
-                instance = new Customer();
-            }
-            return instance;
-        }
+        return instance;
+    }
 
 //        public void save() {
 //            if (!getIdNumber().isEmpty()) {
@@ -218,8 +208,6 @@ public class Customer {
 //        }
 
 
-
-
     // Firebase Realtime Database'a araç kaydetme ve güncelleme
     public void save() {
         try {
@@ -243,81 +231,81 @@ public class Customer {
         }
     }
 
-        // Müşteri zaten var mı kontrolü (Asenkron Yapıya Dikkat)
-        public void isExists(String customerId, final ExistsCallback callback) {
-            db.child(customerId).get().addOnSuccessListener(dataSnapshot -> {
-                callback.onResult(dataSnapshot.exists());
-            }).addOnFailureListener(e -> {
-                System.err.println("Error checking existence: " + e.getMessage());
-            });
-        }
-
-        // Müşteri bilgilerini Firebase Realtime Database'den getirme
-        public void getCustomer(String customerId) {
-            db.child(customerId).get().addOnSuccessListener(dataSnapshot -> {
-                if (dataSnapshot.exists()) {
-                    Customer customer = dataSnapshot.getValue(Customer.class);
-                    if (customer != null) {
-                        setName(customer.getName());
-                        setSurname(customer.getSurname());
-                        setIdNumber(customer.getIdNumber());
-                        setPhoneNumber(customer.getPhoneNumber());
-                        setAddress(customer.getAddress());
-                    } else {
-                        System.out.println("Müşteri bilgileri alınamadı.");
-                    }
-                } else {
-                    System.out.println("Müşteri bulunamadı.");
-                }
-            }).addOnFailureListener(e -> {
-                System.err.println("Error retrieving customer: " + e.getMessage());
-            });
-        }
-
-        // Callback interface for async operations
-        public interface ExistsCallback {
-            void onResult(boolean exists);
-        }
-
-        // Getter ve Setter'lar
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getSurname() {
-            return surname;
-        }
-
-        public void setSurname(String surname) {
-            this.surname = surname;
-        }
-
-        public String getIdNumber() {
-            return idNumber;
-        }
-
-        public void setIdNumber(String idNumber) {
-            this.idNumber = idNumber;
-        }
-
-        public String getPhoneNumber() {
-            return phoneNumber;
-        }
-
-        public void setPhoneNumber(String phoneNumber) {
-            this.phoneNumber = phoneNumber;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
+    // Müşteri zaten var mı kontrolü (Asenkron Yapıya Dikkat)
+    public void isExists(String customerId, final ExistsCallback callback) {
+        db.child(customerId).get().addOnSuccessListener(dataSnapshot -> {
+            callback.onResult(dataSnapshot.exists());
+        }).addOnFailureListener(e -> {
+            System.err.println("Error checking existence: " + e.getMessage());
+        });
     }
+
+    // Müşteri bilgilerini Firebase Realtime Database'den getirme
+    public void getCustomer(String customerId) {
+        db.child(customerId).get().addOnSuccessListener(dataSnapshot -> {
+            if (dataSnapshot.exists()) {
+                Customer customer = dataSnapshot.getValue(Customer.class);
+                if (customer != null) {
+                    setName(customer.getName());
+                    setSurname(customer.getSurname());
+                    setIdNumber(customer.getIdNumber());
+                    setPhoneNumber(customer.getPhoneNumber());
+                    setAddress(customer.getAddress());
+                } else {
+                    System.out.println("Müşteri bilgileri alınamadı.");
+                }
+            } else {
+                System.out.println("Müşteri bulunamadı.");
+            }
+        }).addOnFailureListener(e -> {
+            System.err.println("Error retrieving customer: " + e.getMessage());
+        });
+    }
+
+    // Getter ve Setter'lar
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    // Callback interface for async operations
+    public interface ExistsCallback {
+        void onResult(boolean exists);
+    }
+
+}

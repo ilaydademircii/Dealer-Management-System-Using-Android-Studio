@@ -7,18 +7,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import model.DatabaseConnection;
 
 public class SecondHandVehicle {
 
-    DatabaseConnection db;
-    private PreparedStatement pstat = null;
-    private Connection conn = null;
-    private Statement stat = null;
-
     private static SecondHandVehicle instance;
-
+    DatabaseConnection db;
     String customerIdNo;
     String model;
     String year;
@@ -27,6 +21,9 @@ public class SecondHandVehicle {
     String licensePlate;
     String explanation;
     String date;
+    private PreparedStatement pstat = null;
+    private Connection conn = null;
+    private Statement stat = null;
 
     public SecondHandVehicle() {
         super();
@@ -84,18 +81,18 @@ public class SecondHandVehicle {
                     String query = "insert into secondhandvehicles(CustomerId,Model,Year,Price,ChassisNo,LicensePlate,Explanation)values((Select id from customers where IdNo=?),?,?,?,?,?,?)";
                     setVehicleWithPreparedStatement(query);
 
-                  //  JOptionPane.showMessageDialog(null, "İkinci el araç başarıyla eklendi.", "  ",
+                    //  JOptionPane.showMessageDialog(null, "İkinci el araç başarıyla eklendi.", "  ",
                     //        JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     String query = "UPDATE secondhandvehicles SET CustomerId=(Select id from customers where IdNo=?), Model=?,Year=?,Price=?,LicensePlate=?,Explanation=? WHERE ChassisNo=?";
                     setVehicleWithPreparedStatement(query);
 
-                   // JOptionPane.showMessageDialog(null, "İkinci el araç başarıyla güncellendi.", "  ",
-                     //       JOptionPane.INFORMATION_MESSAGE);
+                    // JOptionPane.showMessageDialog(null, "İkinci el araç başarıyla güncellendi.", "  ",
+                    //       JOptionPane.INFORMATION_MESSAGE);
 
                 }
             } else {
-               // JOptionPane.showMessageDialog(null, "Plaka  boş bırakılamaz.", " Hata ", JOptionPane.ERROR_MESSAGE);
+                // JOptionPane.showMessageDialog(null, "Plaka  boş bırakılamaz.", " Hata ", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception e) {
@@ -142,7 +139,6 @@ public class SecondHandVehicle {
 
         }
     }
-
 
 
     public void setVehicleWithPreparedStatement(String query) {

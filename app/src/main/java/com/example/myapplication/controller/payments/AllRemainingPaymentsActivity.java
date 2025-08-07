@@ -25,7 +25,7 @@ public class AllRemainingPaymentsActivity extends AppCompatActivity {
     ListingAllRemainingPaymentsCommand listingAllRemainingPaymentsCommand;
     private ListView listViewAllRemainingPayments;
     private ArrayAdapter<String> adapter;
-    private List<String> paymentList=new ArrayList<>();
+    private List<String> paymentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,6 @@ public class AllRemainingPaymentsActivity extends AppCompatActivity {
         this.listViewAllRemainingPayments = findViewById(R.id.listView);
 
 
-
         // Adapter tanımlanıyor
         this.adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, paymentList);
 
@@ -54,24 +53,14 @@ public class AllRemainingPaymentsActivity extends AppCompatActivity {
 
     public void onListButtonClicked(View view) {
         try {
-            paymentList.clear();  // Eski verileri temizliyoruz
-            paymentList=listingAllRemainingPaymentsCommand.execute();
 
-
-            Toast.makeText(this, "2 listelendi...", Toast.LENGTH_LONG).show();
-            if(paymentList.isEmpty()){
-                Toast.makeText(this, "Boş...", Toast.LENGTH_LONG).show();
-                paymentList.add("aa");
-            }
-
+//            paymentList.clear();  // Eski verileri temizliyoruz
+            paymentList = listingAllRemainingPaymentsCommand.execute();
             ArrayAdapter<String> listAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_spinner_item, paymentList);
             listAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             listViewAllRemainingPayments.setAdapter(listAdapter);
             listAdapter.notifyDataSetChanged();
-            Toast.makeText(this, "3 listelendi...", Toast.LENGTH_LONG).show();
-
-
             Toast.makeText(this, "Başarıyla listelendi...", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,4 +69,6 @@ public class AllRemainingPaymentsActivity extends AppCompatActivity {
 
         }
     }
+
+
 }
